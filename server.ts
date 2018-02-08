@@ -7,13 +7,12 @@ const handle = app.getRequestHandler()
 app.prepare()
     .then(() => {
         const server = express()
-        // CUSTOM ROUTES GO HERE
 
         // server.get('/blog/:slug', (req: express.Request, res: express.Response) => {
         //     const mergedQuery = (<any>Object).assign({}, req.query, req.params)
         //     return app.render(req, res, '/blog', mergedQuery)
         // });
-        // THIS IS THE DEFAULT ROUTE, DON'T EDIT THIS
+
         server.get('*', (req: express.Request, res: express.Response) => {
             return handle(req, res);
         });
