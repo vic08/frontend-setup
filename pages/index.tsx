@@ -3,20 +3,49 @@ import * as React from 'react'
 import Link from 'next/link'
 import {nextConnect} from "../app/reduxNext"
 import {GlobalStore} from "../app/reducers"
+import {requestCoinmarketData} from '../app/actions/'
 
 export type Props = {
-  something: GlobalStore['something'],
-  shmamfing: GlobalStore['shmamfing']
+  cryptoData: GlobalStore['cryptoData'],
+  dispatch: (any) => any //todo: define types/interfaces for redux
 }
 
-const Index = (props: Props) => (
-  <div>
-    <Link href="/about">
-      <a>About Page</a>
-    </Link>
-    <p>Hello Next.js</p>
-    <p>{props.something} {props.shmamfing}</p>
-  </div>
-)
+type State = {
+  something: number
+}
 
-export default nextConnect((state: GlobalStore) => ({...state}))(Index)
+class Index extends React.PureComponent<Props, State> {
+  componentDidMount() {
+    this.props.dispatch(requestCoinmarketData())
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      something: 0
+    }
+  }
+
+  triggerRerender = () => {
+    this.setState({something: Math.random()})
+  }
+
+  render() {
+    return <div>
+      <Link href="/about">
+        <a>About Page</a>
+      </Link>
+      <p>Hello Next.js</p>
+      {!!this.props.cryptoData.active_assets ?
+        <p>Active assets: {this.props.cryptoData.active_assets.toString()}<br/>
+          Bitcoin dominance: {this.props.cryptoData.bitcoin_percentage_of_market_cap}</p>:
+        <p>Loading...</p>
+      }
+      <button onClick={this.triggerRerender}>render</button>
+      <h2>{this.state.something}</h2>
+    </div>
+  }
+}
+
+export default nextConnect((state: GlobalStore) => ({cryptoData: state.cryptoData}))(Index)
