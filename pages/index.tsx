@@ -46,6 +46,14 @@ class Index extends React.PureComponent<Props, State> {
       }
       <button onClick={this.triggerRerender}>render</button>
       <h2>{this.state.something}</h2>
+      <div className={'styled'}>vah</div>
+      <style jsx>{`
+        .styled {
+          width: 200px;˚
+          height: 200px;
+          background: url('${require('./logo.svg')}')
+        }
+      `}</style>
     </div>
   }
 }

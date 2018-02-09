@@ -9,17 +9,6 @@ module.exports = withTypescript({
 
     config.module.rules.push(
       {
-        test: /\.(svg|png|jpe?g|gif)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 1000 * 1024 //10kb
-            }
-          }
-        ]
-      },
-      {
         test: /\.css$/,
         use: [
           'style-loader',
@@ -29,9 +18,22 @@ module.exports = withTypescript({
       {
         test: /\.scss$/,
         use: [
+          'style-loader',
+          'css-loader',
           'sass-loader'
         ]
-      }
+      },
+      {
+      test: /\.(svg|png|jpe?g|gif)$/,
+        use: [
+        {
+          loader: 'url-loader',
+          options: {
+            limit: 1000 * 1024 //10kb
+          }
+        }
+      ]
+    }
     )
 
     config.resolve.extensions.push('.css', '.scss', '.svg', '.png', '.jpg', '.jpeg', '.gif')
