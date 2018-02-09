@@ -2,6 +2,7 @@
 import * as React from 'react'
 import {nextConnect} from "../app/reduxNext"
 import {GlobalStore} from "../app/reducers"
+import Link from 'next/link'
 
 export type Props = {
   cryptoData: GlobalStore['cryptoData'],
@@ -17,6 +18,9 @@ class About extends React.PureComponent<Props, State> {
   render() {
     return (
       <div>
+        <Link href="/">
+          <a>Home</a>
+        </Link>
         <p>This is the about page</p>
         {!!this.props.cryptoData.active_assets ?
           <p>Active assets: {this.props.cryptoData.active_assets.toString()}<br/>

@@ -6,6 +6,44 @@ module.exports = withTypescript({
   useFileSystemPublicRoutes: true,
 
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
+
+    config.module.rules.push(
+      {
+        test: /\.(svg|png|jpe?g|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 1000 * 1024 //10kb
+            }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'sass-loader'
+        ]
+      }
+    )
+
+    config.resolve.extensions.push('.css', '.scss', '.svg', '.png', '.jpg', '.jpeg', '.gif')
+    // config.module.rules.push({
+    //   test: /\.jsx?$/,
+    //   use: [
+    //     {
+    //       loader: 'babel-loader'
+    //     }
+    //   ]
+    // })
+
     if (ANALYZE) {
       config.plugins.push(new BundleAnalyzerPlugin({
         analyzerMode: 'server',

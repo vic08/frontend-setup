@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {nextConnect} from "../app/reduxNext"
 import {GlobalStore} from "../app/reducers"
 import {requestCoinmarketData} from '../app/actions/'
+import {Header} from 'screencloud-ui-components'
 
 export type Props = {
   cryptoData: GlobalStore['cryptoData'],
@@ -36,6 +37,7 @@ class Index extends React.PureComponent<Props, State> {
       <Link href="/about">
         <a>About Page</a>
       </Link>
+      <Header title={'blaaa'} subtitle={'wateva'}/>
       <p>Hello Next.js</p>
       {!!this.props.cryptoData.active_assets ?
         <p>Active assets: {this.props.cryptoData.active_assets.toString()}<br/>
